@@ -8,7 +8,7 @@ export interface ActionCompletion<T = any> {
   result: {
     successful: boolean;
     canceled: boolean;
-    error?: Error;
+    error?: any;
   };
 }
 
@@ -101,11 +101,11 @@ function filterStatus(allowedTypes: FilterMap, allowedStatuses?: FilterMap) {
 function mapActionResult(): OperatorFunction<ActionContext, ActionCompletion> {
   return map(({ action, status, error }: ActionContext) => {
     return <ActionCompletion>{
-      action: action,
+      action,
       result: {
         successful: ActionStatus.Successful === status,
         canceled: ActionStatus.Canceled === status,
-        error: error
+        error
       }
     };
   });
